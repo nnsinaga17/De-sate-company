@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMKM De'Sate Taman Kota</title>
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/css/style.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #FF9500; 
+            --secondary-color: #FFD700;
+            --dark-color: #212121;
+            --light-bg: #fff8f5;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            color: var(--dark-color);
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: #ffffff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-color) !important;
+        }
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-color);
+            transition: 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color) !important;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background-color: var(--light-bg);
+            padding: 100px 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+        }
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+        .hero-title span {
+            color: white;
+        }
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: 0.3s;
+            border: none;
+        }
+        .btn-custom:hover {
+            background-color: #E68500;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Section Title */
+        .section-title {
+            font-weight: 700;
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Menu Section */
+        .menu-section {
+            padding: 80px 0;
+        }
+        .card-menu {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            overflow: hidden;
+        }
+        .card-menu:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-menu img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .price-text {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        /* About Section */
+        .about-section {
+            background-color: var(--light-bg);
+            padding: 80px 0;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 80px 0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: #ffffff;
+            padding: 16px 0 10px 0;
+        }
+        footer p {
+            margin-bottom: 0;
+        }
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 10px;
+            transition: 0.3s;
+        }
+        .social-icons a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Mobile Landscape - Hero Section Stays Horizontal */
+        @media (max-width: 768px) {
+            .hero-section {
+                min-height: auto;
+                padding: 40px 0;
+            }
+            .hero-section .row {
+                flex-wrap: nowrap;
+            }
+            .hero-section .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .hero-section p {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                min-height: auto;
+                padding: 20px 0;
+            }
+            .hero-section .row {
+                flex-wrap: nowrap;
+            }
+            .hero-section .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+            .hero-title {
+                font-size: 1.3rem;
+            }
+            .hero-section p {
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+            .d-flex.gap-2 {
+                gap: 0.5rem !important;
+            }
+            .btn-custom, .btn-outline-primary {
+                padding: 8px 15px !important;
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-utensils me-2"></i>De'Sate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#favorite">Favorite</a></li>
+                    <li class="nav-item"><a class="nav-link" href="menu.html">Menu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h1 class="hero-title">Kelezatan Asli <span>Nusantara</span> Di Hidangan Anda</h1>
+                    <p class="lead my-4">Kami menyajikan makanan buatan rumah dengan bahan baku segar pilihan dan resep turun-temurun yang terjamin kualitas dan rasanya.</p>
+                    <a href="#menu" class="btn btn-custom">Lihat Menu Kami <i class="fas fa-arrow-right ms-2"></i></a>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&q=80&w=600" alt="Makanan Utama" class="img-fluid rounded-circle shadow">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-5 mb-4 mb-lg-0">
+                    <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80&w=500" alt="Tentang Kami" class="img-fluid rounded-3 shadow">
+                </div>
+                <div class="col-lg-7 ps-lg-5">
+                    <h2 class="section-title text-start">Tentang Dapur UMKM</h2>
+                    <p>Berawal dari dapur rumah kecil pada tahun 2024, kami berkomitmen untuk menghadirkan cita rasa masakan tradisional yang higienis, lezat, dan ramah di kantong.</p>
+                    <p>Setiap porsi makanan yang kami buat dikerjakan penuh cinta dengan memprioritaskan kepuasan pelanggan serta menggunakan rempah-rempah alami pilihan tanpa bahan pengawet buatan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="favorite" class="favorite-section">
+        <div class="container">
+            <h2 class="text-center section-title">Menu Favorit</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card card-favorite">
+                        <img src="https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Nasi Goreng Spesial">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Nasi Goreng Spesial</h5>
+                            <p class="card-text text-muted">Nasi goreng rempah dengan topping ayam suwir, telur mata sapi, dan kerupuk renyah.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-text">Rp 25.000</span>
+                                <button class="btn btn-sm btn-custom btn-pesan" data-item="Nasi Goreng Spesial">Pesan via WA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-favorite">
+                        <img src="https://images.unsplash.com/photo-1596797038530-2c107229654b?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Ayam Bakar Madu">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Ayam Bakar Madu</h5>
+                            <p class="card-text text-muted">Ayam empuk meresap dibakar dengan lumatan madu pilihan murni disajikan bersama sambal bajak.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-text">Rp 30.000</span>
+                                <button class="btn btn-sm btn-custom btn-pesan" data-item="Ayam Bakar Madu">Pesan via WA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-favorite">
+                        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=500" class="card-img-top" alt="Salad Segar Sehat">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">Healthy Mix Salad</h5>
+                            <p class="card-text text-muted">Kombinasi sayuran organik segar dipadu dengan wijen sangrai dressing khas buatan kami.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span class="price-text">Rp 20.000</span>
+                                <button class="btn btn-sm btn-custom btn-pesan" data-item="Healthy Mix Salad">Pesan via WA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="text-center section-title">Hubungi Kami</h2>
+            <div class="row g-4 mt-2">
+                <div class="col-lg-6">
+                    <form id="contactForm" class="p-4 rounded shadow-sm bg-white border">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" required placeholder="Masukkan nama Anda">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" required placeholder="nama@email.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Kritik & Saran</label>
+                            <textarea class="form-control" id="message" rows="4" required placeholder="Tuliskan pesan Anda di sini..."></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-custom w-100">Kirim Pesan</button>
+                    </form>
+                </div>
+                <div class="col-lg-6">
+                    <div class="mb-3">
+                        <h5><i class="fas fa-map-marker-alt text-danger me-2"></i> Alamat Toko:</h5>
+                        <p>Jl. Gajah Mada No. 12, Kota Batam, Kepulauan Riau</p>
+                    </div>
+                    <div class="ratio ratio-16x9 rounded shadow-sm overflow-hidden">
+                        <iframe src="https://maps.google.com/maps?q=De%27Sate%20Taman%20Kota%20Mas%2C%20Batam%2C%20Riau&output=embed" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container text-center">
+            <div class="social-icons mb-3">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2026 Dapur UMKM Makanan. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="asset/js/bootstrap.bundle.js"></script>
+    
+    <script>
+        // Fitur 1: Interaksi Tombol Pesan Langsung ke WhatsApp
+        const tombolPesan = document.querySelectorAll('.btn-pesan');
+        tombolPesan.forEach(button => {
+            button.addEventListener('click', function() {
+                const namaMenu = this.getAttribute('data-item');
+                const nomorWA = "6281160601362"; // Ganti dengan nomor WhatsApp UMKM Anda
+                const teksPesan = encodeURIComponent(`Halo Dapur UMKM, saya ingin memesan menu: *${namaMenu}*. Bagaimana proses selanjutnya?`);
+                
+                // Membuka tab baru ke WhatsApp chat
+                window.open(`https://wa.me/${nomorWA}?text=${teksPesan}`, '_blank');
+            });
+        });
+
+        // Fitur 2: Validasi sederhana Form Kontak & Efek Notifikasi Berhasil
+        const formKontak = document.getElementById('contactForm');
+        formKontak.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah reload halaman saat submit
+            
+            const nama = document.getElementById('name').value;
+            
+            // Tampilkan pesan konfirmasi sederhana
+            alert(`Terima kasih ${nama}, pesan Anda berhasil dikirim! Kami akan segera menghubungi Anda.`);
+            
+            // Reset form input setelah terkirim
+            formKontak.reset();
+        });
+
+        // Fitur 3: Keyboard Shortcut untuk Admin Login (Ctrl+A)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'a') {
+                e.preventDefault();
+                window.location.href = 'admin-login.html';
+            }
+        });
+    </script>
+</body>
+</html>

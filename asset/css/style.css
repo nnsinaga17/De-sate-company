@@ -1,0 +1,498 @@
+/* ===========================
+   Custom Styles for FoodHub
+   =========================== */
+
+/* Root Variables */
+:root {
+    --primary-color: #FF9500;
+    --secondary-color: #FFD700;
+    --dark-color: #2C3E50;
+    --light-color: #ECF0F1;
+    --text-color: #333;
+}
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* ===========================
+   Navigation Bar
+   =========================== */
+.navbar {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    color: var(--primary-color) !important;
+}
+
+.nav-link {
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color) !important;
+}
+
+/* ===========================
+   Hero Section
+   =========================== */
+.hero-section {
+    background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
+    color: white;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    animation: fadeInDown 0.8s ease;
+}
+
+.hero-subtitle {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+.hero-image {
+    font-size: 15rem;
+    animation: bounce 2s infinite;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #ff5252;
+    border-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+}
+
+/* ===========================
+   Menu Section
+   =========================== */
+.menu-section {
+    padding: 80px 0;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 50px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    text-align: center;
+    height: 100%;
+}
+
+.menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15) !important;
+}
+
+.card-emoji {
+    font-size: 4rem;
+    padding: 30px 0;
+    background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
+}
+
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--dark-color);
+    margin-top: 15px;
+}
+
+.card-text {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin: 15px 0;
+}
+
+/* ===========================
+   About Section
+   =========================== */
+.about-section {
+    padding: 80px 0;
+    background: #fafafa;
+}
+
+.about-image-placeholder {
+    font-size: 12rem;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.about-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+}
+
+.about-section ul li {
+    font-size: 1.1rem;
+    color: #555;
+    padding: 8px 0;
+}
+
+.about-section ul li::before {
+    content: '';
+    display: inline-block;
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+/* ===========================
+   Contact Section
+   =========================== */
+.contact-section {
+    padding: 80px 0;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 12px 15px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(255, 107, 107, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+#contactForm .btn {
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.contact-section h5 {
+    font-weight: 700;
+    color: var(--dark-color);
+    margin-bottom: 10px;
+}
+
+.contact-section p {
+    color: #666;
+    font-size: 1.05rem;
+}
+
+/* ===========================
+   Shopping Cart Modal
+   =========================== */
+.modal-header {
+    background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
+    color: white;
+}
+
+.modal-content {
+    border-radius: 12px;
+    border: none;
+}
+
+#cartItems {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-name {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.cart-item-price {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.cart-item-remove {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.cart-item-remove:hover {
+    color: var(--primary-color);
+}
+
+/* ===========================
+   Footer
+   =========================== */
+footer {
+    background: var(--dark-color) !important;
+    color: white;
+}
+
+footer a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--primary-color) !important;
+}
+
+footer h5 {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+/* ===========================
+   Responsive Design
+   =========================== */
+@media (max-width: 768px) {
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .about-image-placeholder {
+        font-size: 8rem;
+        margin-bottom: 30px;
+    }
+
+    .menu-card {
+        margin-bottom: 20px;
+    }
+
+    .dropdown {
+        width: 100%;
+    }
+
+    .dropdown .btn {
+        width: 100%;
+        font-size: 0.95rem;
+    }
+
+    .d-flex.gap-3 {
+        gap: 0.75rem !important;
+    }
+
+    .d-flex.flex-wrap {
+        flex-direction: column;
+    }
+
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .nav-link {
+        margin: 0 5px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title {
+        font-size: 1.3rem;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .container {
+        padding: 0 15px;
+    }
+
+    .row {
+        margin-right: -8px;
+        margin-left: -8px;
+    }
+
+    .col-md-4 {
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+
+    .menu-card {
+        margin-bottom: 15px;
+    }
+
+    .card-emoji {
+        font-size: 2.5rem;
+    }
+
+    .card-title {
+        font-size: 1rem;
+    }
+
+    .card-text {
+        font-size: 0.85rem;
+    }
+
+    .price {
+        font-size: 0.95rem;
+    }
+
+    .dropdown .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .dropdown-menu {
+        font-size: 0.9rem;
+    }
+
+    .dropdown-item {
+        padding: 0.5rem 1rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .nav-link {
+        margin: 0 3px;
+        font-size: 0.85rem;
+    }
+
+    .navbar-toggler {
+        padding: 0.25rem 0.5rem;
+    }
+
+    .d-flex.justify-content-center.gap-3 {
+        gap: 0.5rem !important;
+    }
+
+    .py-5 {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .mb-5 {
+        margin-bottom: 1.5rem !important;
+    }
+
+    .lead {
+        font-size: 1rem;
+    }
+}
+
+/* ===========================
+   Utility Classes
+   =========================== */
+.text-white-50 {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+/* ===========================
+   UMKM specific overrides
+   =========================== */
+.hero-umkm {
+    background: linear-gradient(135deg, #fff7e6 0%, #fff1e0 100%);
+}
+.hero-umkm .display-5 {
+    color: #2d2d2d;
+}
+.hero-card img {
+    max-height: 320px;
+    object-fit: cover;
+}
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+}
+
