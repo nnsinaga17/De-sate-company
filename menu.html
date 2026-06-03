@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Kategori - De'Sate</title>
+    <link href="asset/css/bootstrap.min.css" rel="stylesheet">
+    <link href="asset/css/style.css" rel="stylesheet">
+    <style>
+        .category-pill {
+            border-radius: 50px;
+            padding: 0.75rem 1.4rem;
+            border: 1px solid rgba(255, 149, 0, 0.15);
+            color: #FF9500;
+            background: #FFFACD;
+            transition: transform 0.25s ease;
+        }
+        .category-pill:hover {
+            transform: translateY(-3px);
+        }
+        .menu-summary {
+            max-width: 720px;
+            margin: 0 auto 2rem;
+            color: #555;
+        }
+        .section-intro {
+            letter-spacing: 0.02em;
+        }
+        .footer-note {
+            font-size: 0.95rem;
+            opacity: 0.85;
+        }
+        .wide-hero .hero-image {
+            font-size: 13rem;
+        }
+
+        /* Mobile Landscape - Hero Section Stays Horizontal */
+        @media (max-width: 768px) {
+            .wide-hero {
+                min-height: auto;
+                padding: 40px 0 !important;
+            }
+            .wide-hero .row {
+                flex-wrap: nowrap;
+            }
+            .wide-hero .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            .section-intro {
+                font-size: 0.95rem;
+            }
+            .wide-hero .hero-image {
+                font-size: 8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wide-hero {
+                min-height: auto;
+                padding: 20px 0 !important;
+            }
+            .wide-hero .row {
+                flex-wrap: nowrap;
+            }
+            .wide-hero .col-lg-6 {
+                flex: 0 0 50%;
+                max-width: 50%;
+            }
+            .hero-title {
+                font-size: 1.3rem;
+            }
+            .section-intro {
+                font-size: 0.8rem;
+                line-height: 1.3;
+            }
+            .wide-hero .hero-image {
+                font-size: 5rem;
+            }
+            .d-flex.gap-2 {
+                gap: 0.5rem !important;
+            }
+            .btn-custom, .btn-outline-primary {
+                padding: 8px 15px !important;
+                font-size: 0.8rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-dark" href="index.html">De'Sate</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">About Us</a></li>
+                    <li class="nav-item"><a  class="nav-link" href="index.html#favorite">Favorite</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="menu.html">Menu</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Kategori
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                            <li><a class="dropdown-item" href="#sate">🍢 Sate</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#starters">🥟 Pembuka & Camilan</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#mains">🍛 Hidangan Utama</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="#desserts">🍰 Pencuci Mulut & Minuman</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section py-5 wide-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="hero-title">Menu De'Sate</h1>
+                    <p class="lead my-4 section-intro">Kami hadir dengan tiga kategori menu yang lengkap dan cocok untuk semua suasana: pembuka, utama, dan pencuci mulut.</p>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a href="#categories" class="btn btn-custom">Jelajahi Kategori</a>
+                        <a href="#mains" class="btn btn-outline-primary">Lihat Hidangan Utama</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center mt-4 mt-lg-0">
+                    <div class="hero-image">🍴</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sate" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Sate</h2>
+                <p class="text-muted">Nikmatilah menu sate istimewa kami dengan cita rasa autentik.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍢</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Sate Taichan</h5>
+                            <p class="card-text">Potongan daging empuk disajikan dengan sambal khas De'Sate.</p>
+                            <p class="price">Rp 18.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="starters" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Pembuka & Camilan</h2>
+                <p class="text-muted">Mulai santapan Anda dengan camilan lezat yang cocok untuk membuka selera.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🥟</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Risoles Sayur</h5>
+                            <p class="card-text">Renyaaaah dan sarat sayuran segar, pas untuk teman minum teh.</p>
+                            <p class="price">Rp 15.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🥗</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Salad Segar Nusantara</h5>
+                            <p class="card-text">Sayuran lokal dengan saus kacang gurih, cocok untuk yang ingin sehat.</p>
+                            <p class="price">Rp 14.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mains" class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Hidangan Utama</h2>
+                <p class="text-muted">Santapan utama dengan cita rasa kuat dan porsinya memuaskan.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍛</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nasi Goreng De'Sate</h5>
+                            <p class="card-text">Nasi goreng istimewa dengan pilihan topping ayam suwir dan telur.</p>
+                            <p class="price">Rp 25.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍗</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Ayam Bakar Madu</h5>
+                            <p class="card-text">Ayam empuk dengan lapisan saus madu manis dan aroma bakar khas.</p>
+                            <p class="price">Rp 30.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍝</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Spaghetti Aglio Olio</h5>
+                            <p class="card-text">Pasta lembut dengan rasa bawang putih dan keju yang ringan.</p>
+                            <p class="price">Rp 28.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="desserts" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Pencuci Mulut & Minuman</h2>
+                <p class="text-muted">Akihkan hidangan Anda dengan pilihan manis dan menyegarkan.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍧</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Es Campur Buah</h5>
+                            <p class="card-text">Segarnya buah dan sirup lembut dalam satu gelas dingin.</p>
+                            <p class="price">Rp 16.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍰</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Kue Lapis Legit</h5>
+                            <p class="card-text">Kue tradisional manis dengan lapisan lembut dan rempah hangat.</p>
+                            <p class="price">Rp 20.000</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card menu-card h-100 shadow-sm">
+                        <div class="card-emoji">🍵</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Teh Jahe Hangat</h5>
+                            <p class="card-text">Minuman hangat dengan aroma jahe alami yang menenangkan.</p>
+                            <p class="price">Rp 12.000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white py-6">
+        <div class="container text-center">
+            <p class="mb-1">&copy; 2026 De'Sate Taman Kota</p>
+            <p class="small text-white-50 mb-0 footer-note">Kami hadir untuk memberikan pengalaman makan tradisional yang lezat dan nyaman.</p>
+        </div>
+    </footer>
+
+    <script src="asset/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

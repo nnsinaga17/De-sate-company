@@ -47,7 +47,10 @@ html {
    Hero Section
    =========================== */
 .hero-section {
+HEAD
     background: linear-gradient(135deg, #282015 0%, #FFD700 100%);
+    background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
+>>>>>>> 9d9df61c3ed0aca2be05ecca57fe0d4f7320e4f0
     color: white;
 }
 
