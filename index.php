@@ -1,5 +1,5 @@
 <?php 
-// 1. Panggil file koneksi di awal
+// 1. Panggil file koneksi
 include 'koneksi.php'; 
 ?>
 <!DOCTYPE html>
@@ -14,7 +14,7 @@ include 'koneksi.php';
     
     <style>
         :root {
-            --primary-color: #FF9500; 
+            --primary-color: #b07e37; 
             --secondary-color: #FFD700;
             --dark-color: #212121;
             --light-bg: #c5beba;
@@ -267,7 +267,6 @@ include 'koneksi.php';
             <div class="row g-4">
                 <?php
                 // Mengambil 3 menu teratas dari database
-                // TIPS: Jika kamu punya kolom hitungan views, ganti 'harga DESC' menjadi 'views DESC' atau 'jumlah_dilihat DESC'
                 $query_favorit = mysqli_query($koneksi, "SELECT * FROM db_sate ORDER BY harga DESC LIMIT 3");
                 
                 if(mysqli_num_rows($query_favorit) > 0) {
@@ -378,8 +377,7 @@ include 'koneksi.php';
 
                 <div class="col-md-6">
                     <div class="map-responsive">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.052857476686!2d104.0071373!3d1.1314488!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98bc2399225c5%3A0x9d54e4ff81467554!2sTaman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1717364000000!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.051474679491!2d104.00180457529883!3d1.1233678988658582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98b1aadc70913%3A0xa7a91ec9450be79d!2sDe&#39;Sate%20Taman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1780472678191!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div>
                 </div>
 
             </div>
@@ -387,15 +385,24 @@ include 'koneksi.php';
     </section>
 
     <footer>
-        <div class="container text-center">
-            <div class="social-icons mb-3">
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-whatsapp"></i></a>
-            </div>
-            <p class="mb-0 text-muted small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
+    <div class="container text-center">
+        <!-- Social Media Section -->
+        <div class="footer-social" style="margin-bottom: 20px;">
+            <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
+                <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px;">
+            </a>
+            <a href="https://wa.me/6282392333601" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
+                <img src="asset/img/whatsapp.jpg" alt="WhatsApp" style="width: 35px;">
+            </a>
         </div>
-    </footer>
+        
+        <!-- Copyright -->
+        <p class="mb-1 text-muted small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
+        
+        <!-- Admin Login Link -->
+        <a href="login.php" style="color: #6c757d; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
+    </div>
+</footer>
 
     <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -573,6 +580,7 @@ include 'koneksi.php';
             updateCartUI();
         });
     </script>
+    
     <footer style="text-align: center; padding: 20px;">
     <a href="login.php" style="color: #f5f5f5; font-size: 10px; text-decoration: none; cursor: default;">© 2026 De'Sate</a>
 </footer>
