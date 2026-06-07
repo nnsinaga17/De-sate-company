@@ -1,4 +1,7 @@
 <?php 
+// Mulai sesi agar login admin tetap tersimpan saat buka tab baru
+session_start();
+
 // 1. Panggil file koneksi
 include 'koneksi.php'; 
 ?>
@@ -14,15 +17,16 @@ include 'koneksi.php';
     
     <style>
         :root {
+            /* Hanya menggunakan palet Coklat, Oranye, dan Putih (beserta shadenya) */
             --primary-color: #b07e37; 
-            --secondary-color: #FFD700;
-            --dark-color: #212121;
-            --light-bg: #c5beba;
+            --secondary-color: #e68500;
+            --dark-color: #4a3623; /* Menggunakan coklat tua gelap sebagai pengganti hitam/abu */
+            --light-bg: #fff6eb; /* Shade putih dengan hint oranye/krem, bukan abu-abu */
         }
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #ffffffa6;
+            background-color: #ffffff;
             color: var(--dark-color);
             scroll-behavior: smooth;
         }
@@ -57,7 +61,14 @@ include 'koneksi.php';
             font-size: 3rem;
             font-weight: 700;
         }
-        .hero-title span { color: var(--primary-color); }
+        /* Penyesuaian agar tulisan Nusantara sangat kontras */
+        .hero-title span { 
+            color: #ffffff; 
+            background-color: var(--primary-color);
+            padding: 2px 15px;
+            border-radius: 10px;
+            display: inline-block;
+        }
         .btn-custom {
             background-color: var(--primary-color);
             color: white;
@@ -70,7 +81,7 @@ include 'koneksi.php';
             display: inline-block;
         }
         .btn-custom:hover {
-            background-color: #E68500;
+            background-color: var(--secondary-color);
             color: white;
             transform: translateY(-2px);
         }
@@ -94,6 +105,11 @@ include 'koneksi.php';
             transform: translateX(-50%);
         }
 
+        /* Utility Class untuk menyamakan semua border radius */
+        .rounded-custom {
+            border-radius: 15px !important;
+        }
+
         /* About Section */
         .about-section { background-color: #ffffff; padding: 80px 0; }
 
@@ -107,11 +123,11 @@ include 'koneksi.php';
             transition: 0.3s; 
             height: 100%; 
             border: none; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(176,126,55,0.08); /* Bayangan disesuaikan dengan warna coklat */
         }
         .card-menu:hover { 
             transform: translateY(-5px); 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15) !important; 
+            box-shadow: 0 10px 20px rgba(176,126,55,0.15) !important; 
         }
         .card-menu img { 
             height: 180px; 
@@ -154,13 +170,13 @@ include 'koneksi.php';
             justify-content: center;
             font-size: 1.5rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(176,126,55,0.3);
             z-index: 999;
             transition: 0.3s ease-in-out;
         }
         .floating-cart:hover {
             transform: scale(1.1);
-            background-color: #E68500;
+            background-color: var(--secondary-color);
         }
         .floating-cart .badge {
             position: absolute;
@@ -177,7 +193,7 @@ include 'koneksi.php';
             position: relative;
             height: 0;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px rgba(176,126,55,0.08);
         }
         .map-responsive iframe {
             left: 0;
@@ -222,11 +238,6 @@ include 'koneksi.php';
                     <li class="nav-item"><a class="nav-link" href="#favorite">Favorite</a></li>
                     <li class="nav-item"><a class="nav-link" href="#menu">Menu</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link fw-bold text-success" href="javascript:void(0)" onclick="openCartModal()">
-                            <i class="fas fa-shopping-basket me-1"></i> Cart (<span id="nav-cart-count">0</span>)
-                        </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -251,7 +262,7 @@ include 'koneksi.php';
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 mb-4 mb-lg-0">
-                <img src="asset/img/pakde.jpeg" alt="Pemilik De'Sate" class="img-fluid rounded-3 shadow zoom-target">                </div>
+                <img src="asset/img/pakde.jpeg" alt="Pemilik De'Sate" class="img-fluid rounded-custom shadow zoom-target">                </div>
                 <div class="col-lg-7 ps-lg-5 text-start">
                     <h2 class="section-title text-start">Tentang De'Sate</h2>
                     <p>Berawal dari resep rahasia keluarga, De'Sate didirikan oleh sosok yang akrab disapa <strong>Pak De</strong>. Dimulai dari warung rumahan kecil, beliau berkomitmen untuk selalu menghadirkan hidangan sate legendaris yang tidak hanya higienis, nikmat, dan ramah di kantong, tetapi juga penuh kehangatan.</p>
@@ -349,44 +360,47 @@ include 'koneksi.php';
 </section>
 
     <section id="contact" class="contact-section bg-light-section">
-        <div class="container">
-            <h2 class="text-center section-title">Hubungi & Kunjungi Kami</h2>
-            <div class="row g-4 justify-content-center text-start">
-                
-                <div class="col-md-6">
-                    <div class="bg-white p-4 rounded shadow-sm mb-4">
-                        <h5 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>Alamat Toko</h5>
-                        <p class="text-muted mb-1 fw-semibold">De'Sate Taman Kota Mas</p>
-                        <p class="text-muted small">Perumahan Jl. Taman Kota Mas Blok BLV 2, Tj. Uma, Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29445</p>
-                        <p class="text-muted small mb-0"><i class="fas fa-clock text-warning me-1"></i> Jam Operasional: 10.00 - 22.00 WIB</p>
+    <div class="container">
+        <h2 class="text-center section-title">Hubungi & Kunjungi Kami</h2>
+        <div class="row g-4 justify-content-center text-start">
+            
+            <div class="col-md-6">
+                <div class="bg-white p-4 rounded-custom shadow-sm mb-4">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>Alamat Toko</h5>
+                    <p class="mb-1 fw-semibold" style="color: var(--primary-color);">De'Sate Taman Kota Mas</p>
+                    <p class="text-muted small">Perumahan Jl. Taman Kota Mas Blok BLV 2, Tj. Uma, Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29445</p>
+                    <p class="text-muted small mb-0"><i class="fas fa-clock text-warning me-1"></i> Jam Operasional: 10.00 - 22.00 WIB</p>
+                </div>
+
+                <form action="https://formspree.io/f/xpqeppor" method="POST" id="contactForm" class="bg-white p-4 rounded-custom shadow-sm">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-envelope text-primary me-2"></i>Kirim Kritik & Saran</h5>
+                    
+                    <div class="mb-3">
+                        <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama kamu" required>
                     </div>
+                    
+                    <div class="mb-3">
+                        <label for="message" class="form-label fw-semibold">Pesan / Saran</label>
+                        <textarea name="message" class="form-control" id="message" rows="3" placeholder="Tulis masukan di sini..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-custom w-100">Kirim Notifikasi</button>
+                    <div id="form-status" class="mt-2 text-center small"></div>
+                </form>
+            </div>
 
-                    <form id="contactForm" class="bg-white p-4 rounded shadow-sm">
-                        <h5 class="fw-bold mb-3"><i class="fas fa-envelope text-primary me-2"></i>Kirim Kritik & Saran</h5>
-                        <div class="mb-3">
-                            <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" placeholder="Masukkan nama kamu" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label fw-semibold">Pesan / Saran</label>
-                            <textarea class="form-control" id="message" rows="3" placeholder="Tulis masukan di sini..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-custom w-100">Kirim Notifikasi</button>
-                    </form>
+            <div class="col-md-6">
+               <div class="map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.0514746795006!2d104.00180457529883!3d1.1233678988658582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98b1aadc70913%3A0xa7a91ec9450be79d!2sDe&#39;Sate%20Taman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1780799482841!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
-
-                <div class="col-md-6">
-                    <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.051474679491!2d104.00180457529883!3d1.1233678988658582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98b1aadc70913%3A0xa7a91ec9450be79d!2sDe&#39;Sate%20Taman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1780472678191!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>                    </div>
-                </div>
-
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <footer>
     <div class="container text-center">
-        <!-- Social Media Section -->
         <div class="footer-social" style="margin-bottom: 20px;">
             <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
                 <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px;">
@@ -396,11 +410,9 @@ include 'koneksi.php';
             </a>
         </div>
         
-        <!-- Copyright -->
-        <p class="mb-1 text-muted small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
+        <p class="mb-1 text-light small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
         
-        <!-- Admin Login Link -->
-        <a href="login.php" style="color: #6c757d; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
+        <a href="login.php" style="color: #cccccc; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
     </div>
 </footer>
 
@@ -448,7 +460,8 @@ include 'koneksi.php';
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById('cart-count').innerText = totalItems;
-            document.getElementById('nav-cart-count').innerText = totalItems;
+            
+            // Baris document.getElementById('nav-cart-count').innerText = totalItems; dihapus karena elemen cart di atas sudah hilang
 
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
@@ -570,9 +583,9 @@ include 'koneksi.php';
 
         // Handler form kontak biasa
         document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert(`Terima kasih banyak ${document.getElementById('name').value}, pesan kamu berhasil terkirim!`);
-            this.reset();
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerText = "Mengirim...";
+            btn.disabled = true;
         });
 
         // Jalankan sinkronisasi keranjang saat halaman pertama kali dimuat
