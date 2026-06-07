@@ -1,13 +1,13 @@
 <?php
-$host = "localhost";
-$user = "root";
-$pass = "";
-$db   = "db_sate"; // Pastikan ini sama persis dengan nama database di phpMyAdmin kamu
 
-$koneksi = mysqli_connect($host, $user, $pass, $db);
+$host     = "localhost";
+$username = "root";
+$password = ""; 
+$database = "db_sate"; 
 
-// Cek apakah koneksi berhasil
+$koneksi = mysqli_connect($host, $username, $password, $database);
+
 if (!$koneksi) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Koneksi database gagal: " . mysqli_connect_error());
 }
 ?>
