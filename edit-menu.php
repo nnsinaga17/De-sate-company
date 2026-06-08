@@ -1,19 +1,26 @@
 <?php
+session_start();
+// Cek Login
+if(!isset($_SESSION['login'])) {
+    header("Location: login.php");
+    exit;
+}
+
 include 'koneksi.php';
 
-// Ambil ID dari URL
-$id = $_GET['id'];
+// Ambil ID dari URL dengan aman
+$id = mysqli_real_escape_string($koneksi, $_GET['id']);
 
-// Ambil data menu yang mau diedit dari database
-$query = mysqli_query($koneksi, "SELECT * FROM db_sate WHERE id='$id'");
+// Ambil data menu yang mau diedit dari database baru (menu_item)
+$query = mysqli_query($koneksi, "SELECT * FROM menu_item WHERE menu_id='$id'");
 $data = mysqli_fetch_assoc($query);
 
 // Proses Update Data
 if(isset($_POST['update_menu'])) {
-    $nama = $_POST['nama_menu'];
-    $harga = $_POST['harga'];
-    $kategori = $_POST['kategori'];
-    $deskripsi = $_POST['deskripsi'];
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama_menu']);
+    $harga = mysqli_real_escape_string($koneksi, $_POST['harga']);
+    $kategori_id = mysqli_real_escape_string($koneksi, $_POST['kategori']);
+    $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
     
     // Cek apakah admin mengupload foto baru
     if($_FILES['gambar']['name'] != "") {
@@ -25,10 +32,12 @@ if(isset($_POST['update_menu'])) {
         move_uploaded_file($tmp_file, $path);
         
         // Update semua data termasuk nama file gambar baru
-        mysqli_query($koneksi, "UPDATE db_sate SET nama_menu='$nama', kategori='$kategori', harga='$harga', deskripsi='$deskripsi', gambar='$gambar' WHERE id='$id'");
+        $query_update = "UPDATE menu_item SET menu_name='$nama', category_id='$kategori_id', price='$harga', description='$deskripsi', image_url='$gambar' WHERE menu_id='$id'";
+        mysqli_query($koneksi, $query_update);
     } else {
         // Kalau foto TIDAK diganti (hanya ganti teks/harga)
-        mysqli_query($koneksi, "UPDATE db_sate SET nama_menu='$nama', kategori='$kategori', harga='$harga', deskripsi='$deskripsi' WHERE id='$id'");
+        $query_update = "UPDATE menu_item SET menu_name='$nama', category_id='$kategori_id', price='$harga', description='$deskripsi' WHERE menu_id='$id'";
+        mysqli_query($koneksi, $query_update);
     }
     
     // Balik lagi ke dashboard
@@ -60,32 +69,38 @@ if(isset($_POST['update_menu'])) {
         <form method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label>Nama Menu</label>
-                <input type="text" name="nama_menu" value="<?php echo $data['nama_menu']; ?>" required class="form-control">
+                <input type="text" name="nama_menu" value="<?php echo $data['menu_name']; ?>" required class="form-control">
             </div>
             
             <div class="form-group">
                 <label>Harga (Rp)</label>
-                <input type="number" name="harga" value="<?php echo $data['harga']; ?>" required class="form-control">
+                <input type="number" name="harga" value="<?php echo $data['price']; ?>" required class="form-control">
             </div>
             
             <div class="form-group">
                 <label>Kategori</label>
                 <select name="kategori" required class="form-control">
-                    <option value="sate" <?php if($data['kategori'] == 'sate') echo 'selected'; ?>>Sate</option>
-                    <option value="Mie" <?php if($data['kategori'] == 'Mie') echo 'selected'; ?>>Mie</option>
-                    <option value="Nasi" <?php if($data['kategori'] == 'Nasi') echo 'selected'; ?>>Nasi</option>
-                    <option value="Minuman" <?php if($data['kategori'] == 'Minuman') echo 'selected'; ?>>Minuman</option>
+                    <option value="">-- Pilih Kategori --</option>
+                    <?php
+                    // Tarik data dari tabel kategori secara dinamis
+                    $query_kat = mysqli_query($koneksi, "SELECT * FROM category");
+                    while($kat = mysqli_fetch_assoc($query_kat)) {
+                        // Cek dan pilih otomatis kategori yang sesuai dengan menu ini
+                        $selected = ($kat['category_id'] == $data['category_id']) ? 'selected' : '';
+                        echo '<option value="'.$kat['category_id'].'" '.$selected.'>'.$kat['category_name'].'</option>';
+                    }
+                    ?>
                 </select>
             </div>
             
             <div class="form-group">
                 <label>Deskripsi Singkat</label>
-                <textarea name="deskripsi" required class="form-control" rows="3"><?php echo $data['deskripsi']; ?></textarea>
+                <textarea name="deskripsi" required class="form-control" rows="3"><?php echo $data['description']; ?></textarea>
             </div>
 
             <div class="form-group">
                 <label>Foto Saat Ini:</label>
-                <img src="asset/img/<?php echo $data['gambar']; ?>" style="width: 150px; border-radius: 8px; margin-bottom: 10px; display: block;">
+                <img src="asset/img/<?php echo $data['image_url']; ?>" style="width: 150px; border-radius: 8px; margin-bottom: 10px; display: block;">
                 <label>Ganti Foto (Kosongkan jika tidak ingin ganti foto)</label>
                 <input type="file" name="gambar" accept="image/*" class="form-control">
             </div>
