@@ -1,6 +1,4 @@
-/* ===========================
-   Custom Styles for FoodHub
-   =========================== */
+/* Custom Styles for FoodHub / De'Sate */
 
 /* Root Variables */
 :root {
@@ -15,6 +13,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-color);
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
 }
 
@@ -22,9 +22,7 @@ html {
     scroll-behavior: smooth;
 }
 
-/* ===========================
-   Navigation Bar
-   =========================== */
+/* Navigation Bar */
 .navbar {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -43,14 +41,9 @@ html {
     color: var(--primary-color) !important;
 }
 
-/* ===========================
-   Hero Section
-   =========================== */
+/* Hero Section */
 .hero-section {
-HEAD
-    background: linear-gradient(135deg, #282015 0%, #FFD700 100%);
     background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
->>>>>>> 9d9df61c3ed0aca2be05ecca57fe0d4f7320e4f0
     color: white;
 }
 
@@ -117,9 +110,7 @@ HEAD
     box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
 }
 
-/* ===========================
-   Menu Section
-   =========================== */
+/* Menu Section */
 .menu-section {
     padding: 80px 0;
 }
@@ -185,9 +176,7 @@ HEAD
     margin: 15px 0;
 }
 
-/* ===========================
-   About Section
-   =========================== */
+/* About Section */
 .about-section {
     padding: 80px 0;
     background: #fafafa;
@@ -218,9 +207,7 @@ HEAD
     color: var(--secondary-color);
 }
 
-/* ===========================
-   Contact Section
-   =========================== */
+/* Contact Section */
 .contact-section {
     padding: 80px 0;
 }
@@ -262,9 +249,7 @@ HEAD
     font-size: 1.05rem;
 }
 
-/* ===========================
-   Shopping Cart Modal
-   =========================== */
+/* Shopping Cart Modal */
 .modal-header {
     background: linear-gradient(135deg, #FF9500 0%, #FFD700 100%);
     color: white;
@@ -316,163 +301,18 @@ HEAD
     color: var(--primary-color);
 }
 
-/* ===========================
-   Footer
-   =========================== */
+/* Footer */
 footer {
     background: var(--dark-color) !important;
     color: white;
+    padding: 30px 0 20px 0 !important; 
+    width: 100%;
+    display: block;
+    margin-bottom: 0 !important;
+    overflow: hidden; 
 }
 
-footer a {
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: var(--primary-color) !important;
-}
-
-footer h5 {
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-/* ===========================
-   Responsive Design
-   =========================== */
-@media (max-width: 768px) {
-    .section-title {
-        font-size: 1.8rem;
-    }
-
-    .about-image-placeholder {
-        font-size: 8rem;
-        margin-bottom: 30px;
-    }
-
-    .menu-card {
-        margin-bottom: 20px;
-    }
-
-    .dropdown {
-        width: 100%;
-    }
-
-    .dropdown .btn {
-        width: 100%;
-        font-size: 0.95rem;
-    }
-
-    .d-flex.gap-3 {
-        gap: 0.75rem !important;
-    }
-
-    .d-flex.flex-wrap {
-        flex-direction: column;
-    }
-
-    .navbar-brand {
-        font-size: 1.3rem;
-    }
-
-    .nav-link {
-        margin: 0 5px;
-        font-size: 0.95rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .section-title {
-        font-size: 1.3rem;
-    }
-
-    .btn-lg {
-        padding: 10px 20px;
-        font-size: 0.9rem;
-    }
-
-    .container {
-        padding: 0 15px;
-    }
-
-    .row {
-        margin-right: -8px;
-        margin-left: -8px;
-    }
-
-    .col-md-4 {
-        padding-right: 8px;
-        padding-left: 8px;
-    }
-
-    .menu-card {
-        margin-bottom: 15px;
-    }
-
-    .card-emoji {
-        font-size: 2.5rem;
-    }
-
-    .card-title {
-        font-size: 1rem;
-    }
-
-    .card-text {
-        font-size: 0.85rem;
-    }
-
-    .price {
-        font-size: 0.95rem;
-    }
-
-    .dropdown .btn {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.85rem;
-    }
-
-    .dropdown-menu {
-        font-size: 0.9rem;
-    }
-
-    .dropdown-item {
-        padding: 0.5rem 1rem;
-    }
-
-    .navbar-brand {
-        font-size: 1.1rem;
-    }
-
-    .nav-link {
-        margin: 0 3px;
-        font-size: 0.85rem;
-    }
-
-    .navbar-toggler {
-        padding: 0.25rem 0.5rem;
-    }
-
-    .d-flex.justify-content-center.gap-3 {
-        gap: 0.5rem !important;
-    }
-
-    .py-5 {
-        padding-top: 2rem !important;
-        padding-bottom: 2rem !important;
-    }
-
-    .mb-5 {
-        margin-bottom: 1.5rem !important;
-    }
-
-    .lead {
-        font-size: 1rem;
-    }
-}
-
-/* ===========================
-   Utility Classes
-   =========================== */
+/* Utility Classes */
 .text-white-50 {
     color: rgba(255, 255, 255, 0.5);
 }
@@ -481,9 +321,7 @@ footer h5 {
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
-/* ===========================
-   UMKM specific overrides
-   =========================== */
+/* UMKM specific overrides */
 .hero-umkm {
     background: linear-gradient(135deg, #fff7e6 0%, #fff1e0 100%);
 }
@@ -498,4 +336,3 @@ footer h5 {
     height: 220px;
     object-fit: cover;
 }
-

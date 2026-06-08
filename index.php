@@ -17,11 +17,10 @@ include 'koneksi.php';
     
     <style>
         :root {
-            /* Hanya menggunakan palet Coklat, Oranye, dan Putih (beserta shadenya) */
             --primary-color: #b07e37; 
             --secondary-color: #e68500;
-            --dark-color: #4a3623; /* Menggunakan coklat tua gelap sebagai pengganti hitam/abu */
-            --light-bg: #fff6eb; /* Shade putih dengan hint oranye/krem, bukan abu-abu */
+            --dark-color: #4a3623; 
+            --light-bg: #fff6eb;
         }
 
         body {
@@ -29,6 +28,9 @@ include 'koneksi.php';
             background-color: #ffffff;
             color: var(--dark-color);
             scroll-behavior: smooth;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
         }
 
         /* Navbar Styling */
@@ -123,7 +125,7 @@ include 'koneksi.php';
             transition: 0.3s; 
             height: 100%; 
             border: none; 
-            box-shadow: 0 5px 15px rgba(176,126,55,0.08); /* Bayangan disesuaikan dengan warna coklat */
+            box-shadow: 0 5px 15px rgba(176,126,55,0.08);
         }
         .card-menu:hover { 
             transform: translateY(-5px); 
@@ -155,7 +157,7 @@ include 'koneksi.php';
         }
         .btn-cart-wa:hover { background-color: #128C7E; color: white; }
 
-        /* Tombol Keranjang Melayang (Floating Cart) */
+        /* Tombol Floating Cart */
         .floating-cart {
             position: fixed;
             bottom: 30px;
@@ -207,7 +209,9 @@ include 'koneksi.php';
         footer { 
             background-color: var(--dark-color); 
             color: #ffffff; 
-            padding: 30px 0 15px 0; 
+            padding: 30px 0 15px 0;
+            width: 100%;
+            display: block;
         }
         .social-icons a { 
             color: white; 
@@ -273,74 +277,24 @@ include 'koneksi.php';
     </section>
 
     <section id="favorite" class="favorite-section bg-light-section">
-        <div class="container">
-            <h2 class="text-center section-title">Menu Terfavorit</h2>
-            <div class="row g-4">
-                <?php
-                // Mengambil 3 menu teratas dari database
-                $query_favorit = mysqli_query($koneksi, "SELECT * FROM db_sate ORDER BY harga DESC LIMIT 3");
-                
-                if(mysqli_num_rows($query_favorit) > 0) {
-                    while($fav = mysqli_fetch_array($query_favorit)) {
-                    ?>
-                    <div class="col-md-4">
-                        <div class="card card-menu shadow-sm">
-                            <img src="asset/img/<?php echo $fav['gambar']; ?>" class="card-img-top zoom-target" alt="<?php echo $fav['nama_menu']; ?>">
-                            <div class="card-body d-flex flex-column text-start">
-                                <h5 class="fw-bold"><?php echo $fav['nama_menu']; ?></h5>
-                                <p class="text-muted small flex-grow-1"><?php echo $fav['deskripsi']; ?></p>
-                                <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <span class="price-text">Rp <?php echo number_format($fav['harga'], 0, ',', '.'); ?></span>
-                                    <button onclick="addToCart('<?php echo addslashes($fav['nama_menu']); ?>', <?php echo $fav['harga']; ?>)" class="btn-cart-wa">
-                                        <i class="fas fa-cart-plus me-1"></i> + Keranjang
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <?php 
-                    }
-                } else {
-                    echo "<div class='col-12 text-center'><p class='text-muted small'>Belum ada menu favorit yang tersedia.</p></div>";
-                }
-                ?>
-            </div>
-        </div>
-    </section>
-
-    <section id="menu" class="menu-section">
     <div class="container">
-        <h2 class="text-center section-title">Daftar Menu Kategori</h2>
-
-        <?php
-        // Mengambil semua kategori unik yang terdaftar di database secara otomatis
-        $query_kategori = mysqli_query($koneksi, "SELECT DISTINCT kategori FROM db_sate");
-        
-        $index = 1;
-        while($kat_row = mysqli_fetch_array($query_kategori)) {
-            $kat = $kat_row['kategori'];
+        <h2 class="text-center section-title">Menu Terfavorit</h2>
+        <div class="row g-4">
+            <?php
+            $query_favorit = mysqli_query($koneksi, "SELECT * FROM menu_item ORDER BY price DESC LIMIT 3");
             
-            echo '<div class="category-block mb-5">';
-            echo '<h4 class="fw-bold text-capitalize text-start mb-4" style="color: var(--primary-color); border-left: 4px solid var(--primary-color); padding-left: 10px;">' . $index . '. Kategori ' . $kat . '</h4>';
-            echo '<div class="row g-4">';
-            
-            // Mengambil semua menu sesuai kategori, diurutkan dari yang paling baru ditambahkan (tanpa limit)
-            $query_menu = mysqli_query($koneksi, "SELECT * FROM db_sate WHERE kategori='$kat' ORDER BY id DESC");
-            
-            if(mysqli_num_rows($query_menu) > 0) {
-                while($row = mysqli_fetch_array($query_menu)){
+            if($query_favorit && mysqli_num_rows($query_favorit) > 0) {
+                while($fav = mysqli_fetch_array($query_favorit)) {
                 ?>
                 <div class="col-md-4">
                     <div class="card card-menu shadow-sm">
-                        <img src="asset/img/<?php echo $row['gambar']; ?>" class="card-img-top zoom-target" alt="<?php echo $row['nama_menu']; ?>" style="height: 200px; object-fit: cover;">
+                        <img src="asset/img/<?php echo $fav['image_url']; ?>" class="card-img-top zoom-target" alt="<?php echo $fav['menu_name']; ?>">
                         <div class="card-body d-flex flex-column text-start">
-                            <small class="text-muted text-capitalize d-block mb-1"><?php echo $row['kategori']; ?></small>
-                            <h5 class="fw-bold"><?php echo $row['nama_menu']; ?></h5>
-                            <p class="text-muted small flex-grow-1"><?php echo $row['deskripsi']; ?></p>
-                            
+                            <h5 class="fw-bold"><?php echo $fav['menu_name']; ?></h5>
+                            <p class="text-muted small flex-grow-1"><?php echo $fav['description']; ?></p>
                             <div class="d-flex justify-content-between align-items-center mt-3">
-                                <p class="price-text">Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></p>
-                                <button onclick="addToCart('<?php echo addslashes($row['nama_menu']); ?>', <?php echo $row['harga']; ?>)" class="btn-cart-wa">
+                                <span class="price-text">Rp <?php echo number_format($fav['price'], 0, ',', '.'); ?></span>
+                                <button onclick="addToCart('<?php echo addslashes($fav['menu_name']); ?>', <?php echo $fav['price']; ?>)" class="btn-cart-wa">
                                     <i class="fas fa-cart-plus me-1"></i> + Keranjang
                                 </button>
                             </div>
@@ -348,73 +302,106 @@ include 'koneksi.php';
                     </div>
                 </div>
                 <?php 
-                } 
+                }
             } else {
-                echo "<div class='col-12 text-start'><p class='text-muted ps-2 small'>Belum ada menu yang tersedia di kategori ini.</p></div>";
+                echo "<div class='col-12 text-center'><p class='text-muted small'>Belum ada menu favorit yang tersedia.</p></div>";
             }
-            echo '</div></div>';
-            $index++;
+            ?>
+        </div>
+    </div>
+    </section>
+
+    <section id="menu" class="menu-section">
+    <div class="container">
+        <h2 class="text-center section-title">Daftar Menu Kategori</h2>
+
+        <?php
+        $query_kategori = mysqli_query($koneksi, "SELECT * FROM category");
+        
+        $index = 1;
+        if($query_kategori) {
+            while($kat_row = mysqli_fetch_array($query_kategori)) {
+                $kat_id = $kat_row['category_id'];
+                $kat_name = $kat_row['category_name'];
+                
+                echo '<div class="category-block mb-5">';
+                echo '<h4 class="fw-bold text-capitalize text-start mb-4" style="color: var(--primary-color); border-left: 4px solid var(--primary-color); padding-left: 10px;">' . $index . '. Kategori ' . $kat_name . '</h4>';
+                echo '<div class="row g-4">';
+                
+                $query_menu = mysqli_query($koneksi, "SELECT * FROM menu_item WHERE category_id='$kat_id' ORDER BY menu_id DESC");
+                
+                if($query_menu && mysqli_num_rows($query_menu) > 0) {
+                    while($row = mysqli_fetch_array($query_menu)){
+                    ?>
+                    <div class="col-md-4">
+                        <div class="card card-menu shadow-sm">
+                            <img src="asset/img/<?php echo $row['image_url']; ?>" class="card-img-top zoom-target" alt="<?php echo $row['menu_name']; ?>" style="height: 200px; object-fit: cover;">
+                            <div class="card-body d-flex flex-column text-start">
+                                <small class="text-muted text-capitalize d-block mb-1"><?php echo $kat_name; ?></small>
+                                <h5 class="fw-bold"><?php echo $row['menu_name']; ?></h5>
+                                <p class="text-muted small flex-grow-1"><?php echo $row['description']; ?></p>
+                                
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <p class="price-text">Rp <?php echo number_format($row['price'], 0, ',', '.'); ?></p>
+                                    <button onclick="addToCart('<?php echo addslashes($row['menu_name']); ?>', <?php echo $row['price']; ?>)" class="btn-cart-wa">
+                                        <i class="fas fa-cart-plus me-1"></i> + Keranjang
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                    } 
+                } else {
+                    echo "<div class='col-12 text-start'><p class='text-muted ps-2 small'>Belum ada menu yang tersedia di kategori ini.</p></div>";
+                }
+                echo '</div></div>';
+                $index++;
+            }
         }
         ?>
     </div>
-</section>
+    </section>
 
     <section id="contact" class="contact-section bg-light-section">
-    <div class="container">
-        <h2 class="text-center section-title">Hubungi & Kunjungi Kami</h2>
-        <div class="row g-4 justify-content-center text-start">
-            
-            <div class="col-md-6">
-                <div class="bg-white p-4 rounded-custom shadow-sm mb-4">
-                    <h5 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>Alamat Toko</h5>
-                    <p class="mb-1 fw-semibold" style="color: var(--primary-color);">De'Sate Taman Kota Mas</p>
-                    <p class="text-muted small">Perumahan Jl. Taman Kota Mas Blok BLV 2, Tj. Uma, Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29445</p>
-                    <p class="text-muted small mb-0"><i class="fas fa-clock text-warning me-1"></i> Jam Operasional: 10.00 - 22.00 WIB</p>
+        <div class="container">
+            <h2 class="text-center section-title">Hubungi & Kunjungi Kami</h2>
+            <div class="row g-4 justify-content-center text-start">
+                
+                <div class="col-md-6">
+                    <div class="bg-white p-4 rounded-custom shadow-sm mb-4">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-map-marker-alt text-danger me-2"></i>Alamat Toko</h5>
+                        <p class="mb-1 fw-semibold" style="color: var(--primary-color);">De'Sate Taman Kota Mas</p>
+                        <p class="text-muted small">Perumahan Jl. Taman Kota Mas Blok BLV 2, Tj. Uma, Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29445</p>
+                        <p class="text-muted small mb-0"><i class="fas fa-clock text-warning me-1"></i> Jam Operasional: 10.00 - 22.00 WIB</p>
+                    </div>
+
+                    <form action="https://formspree.io/f/xpqeppor" method="POST" id="contactForm" class="bg-white p-4 rounded-custom shadow-sm">
+                        <h5 class="fw-bold mb-3"><i class="fas fa-envelope text-primary me-2"></i>Kirim Kritik & Saran</h5>
+                        
+                        <div class="mb-3">
+                            <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama kamu" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="message" class="form-label fw-semibold">Pesan / Saran</label>
+                            <textarea name="message" class="form-control" id="message" rows="3" placeholder="Tulis masukan di sini..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-custom w-100">Kirim Notifikasi</button>
+                        <div id="form-status" class="mt-2 text-center small"></div>
+                    </form>
                 </div>
 
-                <form action="https://formspree.io/f/xpqeppor" method="POST" id="contactForm" class="bg-white p-4 rounded-custom shadow-sm">
-                    <h5 class="fw-bold mb-3"><i class="fas fa-envelope text-primary me-2"></i>Kirim Kritik & Saran</h5>
-                    
-                    <div class="mb-3">
-                        <label for="name" class="form-label fw-semibold">Nama Lengkap</label>
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan nama kamu" required>
+                <div class="col-md-6">
+                   <div class="map-responsive">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.0514746795006!2d104.00180457529883!3d1.1233678988658582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98b1aadc70913%3A0xa7a91ec9450be79d!2sDe'Sate%20Taman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1780799482841!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
-                    
-                    <div class="mb-3">
-                        <label for="message" class="form-label fw-semibold">Pesan / Saran</label>
-                        <textarea name="message" class="form-control" id="message" rows="3" placeholder="Tulis masukan di sini..." required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-custom w-100">Kirim Notifikasi</button>
-                    <div id="form-status" class="mt-2 text-center small"></div>
-                </form>
-            </div>
-
-            <div class="col-md-6">
-               <div class="map-responsive">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.0514746795006!2d104.00180457529883!3d1.1233678988658582!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98b1aadc70913%3A0xa7a91ec9450be79d!2sDe&#39;Sate%20Taman%20Kota%20Mas!5e0!3m2!1sid!2sid!4v1780799482841!5m2!1sid!2sid" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-    <footer>
-    <div class="container text-center">
-        <div class="footer-social" style="margin-bottom: 20px;">
-            <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
-                <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px;">
-            </a>
-            <a href="https://wa.me/6282392333601" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
-                <img src="asset/img/whatsapp.jpg" alt="WhatsApp" style="width: 35px;">
-            </a>
-        </div>
-        
-        <p class="mb-1 text-light small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
-        
-        <a href="login.php" style="color: #cccccc; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
-    </div>
-</footer>
+    </section>
 
     <div class="modal fade" id="previewModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-md">
@@ -435,8 +422,7 @@ include 'koneksi.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-start">
-                    <div id="cart-items-container">
-                        </div>
+                    <div id="cart-items-container"></div>
                     <hr>
                     <div class="d-flex justify-content-between align-items-center fw-bold fs-5">
                         <span>Total Bayar:</span>
@@ -451,18 +437,32 @@ include 'koneksi.php';
         </div>
     </div>
 
+    <footer>
+        <div class="container text-center">
+            <div class="footer-social" style="margin-bottom: 20px;">
+                <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
+                    <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px;">
+                </a>
+                <a href="https://wa.me/6282392333601" target="_blank" rel="noopener noreferrer" style="margin: 0 15px;">
+                    <img src="asset/img/whatsapp.jpg" alt="WhatsApp" style="width: 35px;">
+                </a>
+            </div>
+            
+            <p class="mb-1 text-light small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
+            
+            <a href="login.php" style="color: #cccccc; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
+        </div>
+    </footer>
+
     <script src="asset/js/bootstrap.bundle.js"></script>
     <script>
         // --- SISTEM KERANJANG BELANJA (LOCALSTORAGE) ---
         let cart = JSON.parse(localStorage.getItem('desate_cart')) || [];
 
-        // Fungsi memperbarui UI jumlah badge keranjang & isi modal
         function updateCartUI() {
             const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
             document.getElementById('cart-count').innerText = totalItems;
             
-            // Baris document.getElementById('nav-cart-count').innerText = totalItems; dihapus karena elemen cart di atas sudah hilang
-
             const container = document.getElementById('cart-items-container');
             if (cart.length === 0) {
                 container.innerHTML = '<p class="text-muted text-center py-3">Keranjang belanjamu masih kosong nih.</p>';
@@ -497,22 +497,18 @@ include 'koneksi.php';
             document.getElementById('cart-total-price').innerText = 'Rp ' + grandTotal.toLocaleString('id-ID');
         }
 
-        // Fungsi Tambah ke Keranjang
         function addToCart(namaMenu, hargaMenu) {
             const foundIndex = cart.findIndex(item => item.nama === namaMenu);
-            
             if (foundIndex > -1) {
                 cart[foundIndex].qty += 1;
             } else {
                 cart.push({ nama: namaMenu, harga: hargaMenu, qty: 1 });
             }
-
             localStorage.setItem('desate_cart', JSON.stringify(cart));
             updateCartUI();
             alert(`"${namaMenu}" berhasil ditambahkan ke keranjang!`);
         }
 
-        // Fungsi Ubah Kuantitas (+/-)
         function changeQty(index, amount) {
             cart[index].qty += amount;
             if (cart[index].qty <= 0) {
@@ -522,21 +518,18 @@ include 'koneksi.php';
             updateCartUI();
         }
 
-        // Fungsi Hapus Item Tunggal
         function deleteItem(index) {
             cart.splice(index, 1);
             localStorage.setItem('desate_cart', JSON.stringify(cart));
             updateCartUI();
         }
 
-        // Fungsi Buka Modal Keranjang
         function openCartModal() {
             updateCartUI();
             const modalCartElement = new bootstrap.Modal(document.getElementById('cartModal'));
             modalCartElement.show();
         }
 
-        // Fungsi Rekap & Kirim Sekaligus ke WhatsApp
         function checkoutToWhatsApp() {
             if (cart.length === 0) {
                 alert('Keranjang belanja kosong, yuk pilih sate dulu!');
@@ -557,15 +550,12 @@ include 'koneksi.php';
             teksPesan += `*Total Grand Price: Rp ${totalBayar.toLocaleString('id-ID')}*\n\n`;
             teksPesan += `Mohon konfirmasi pesanannya ya min, terima kasih!`;
 
-            // Proses encode teks pesan agar aman dibaca url WhatsApp API
             let urlAkhir = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teksPesan)}`;
             
-            // Kosongkan keranjang setelah checkout sukses
             cart = [];
             localStorage.removeItem('desate_cart');
             updateCartUI();
 
-            // Redirect ke tab baru WhatsApp
             window.open(urlAkhir, '_blank');
         }
 
@@ -588,14 +578,10 @@ include 'koneksi.php';
             btn.disabled = true;
         });
 
-        // Jalankan sinkronisasi keranjang saat halaman pertama kali dimuat
+        // Sinkronisasi keranjang
         document.addEventListener('DOMContentLoaded', () => {
             updateCartUI();
         });
     </script>
-    
-    <footer style="text-align: center; padding: 20px;">
-    <a href="login.php" style="color: #f5f5f5; font-size: 10px; text-decoration: none; cursor: default;">© 2026 De'Sate</a>
-</footer>
 </body>
 </html>

@@ -9,17 +9,24 @@ include 'koneksi.php';
 
 // PROSES TAMBAH MENU
 if(isset($_POST['tambah_menu'])) {
-    $nama = $_POST['nama_menu'];
-    $harga = $_POST['harga'];
-    $kategori = $_POST['kategori'];
-    $deskripsi = $_POST['deskripsi'];
+    $nama = mysqli_real_escape_string($koneksi, $_POST['nama_menu']);
+    $harga = mysqli_real_escape_string($koneksi, $_POST['harga']);
+    $kategori_id = mysqli_real_escape_string($koneksi, $_POST['kategori']); // Mengambil ID dari dropdown
+    $deskripsi = mysqli_real_escape_string($koneksi, $_POST['deskripsi']);
     
     $gambar = $_FILES['gambar']['name'];
     $tmp_file = $_FILES['gambar']['tmp_name'];
     $path = "asset/img/" . $gambar;
     
+    // Default admin_id = 1 (Sona) jika session admin_id belum diset di halaman login
+    $admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : 1; 
+    
     if(move_uploaded_file($tmp_file, $path)) {
-        mysqli_query($koneksi, "INSERT INTO db_sate (nama_menu, kategori, harga, deskripsi, gambar) VALUES ('$nama', '$kategori', '$harga', '$deskripsi', '$gambar')");
+        // Query disesuaikan dengan nama tabel dan kolom yang baru
+        $query_tambah = "INSERT INTO menu_item (admin_id, category_id, menu_name, description, price, image_url) 
+                         VALUES ('$admin_id', '$kategori_id', '$nama', '$deskripsi', '$harga', '$gambar')";
+        mysqli_query($koneksi, $query_tambah);
+        
         header("Location: admin-dashboard.php");
         exit;
     } else {
@@ -30,7 +37,8 @@ if(isset($_POST['tambah_menu'])) {
 // PROSES HAPUS MENU
 if(isset($_GET['hapus_id'])) {
     $id = mysqli_real_escape_string($koneksi, $_GET['hapus_id']);
-    mysqli_query($koneksi, "DELETE FROM db_sate WHERE id='$id'");
+    // Query hapus mengarah ke tabel menu_item dengan patokan menu_id
+    mysqli_query($koneksi, "DELETE FROM menu_item WHERE menu_id='$id'");
     header("Location: admin-dashboard.php");
     exit;
 }
@@ -46,11 +54,11 @@ if(isset($_GET['hapus_id'])) {
         :root {
             --primary-orange: #d1851b;
             --hover-orange: #E68A00;
-            --light-orange: #FFF8F0; /* Putih dengan hint oranye */
-            --header-orange: #FFE8D1; /* Oranye pastel untuk header tabel */
-            --brown-dark: #4E342E; /* Cokelat gelap untuk teks */
+            --light-orange: #FFF8F0; 
+            --header-orange: #FFE8D1; 
+            --brown-dark: #4E342E; 
             --brown-light: #8D6E63;
-            --bg-main: #F7F5F2; /* Putih tulang/krem terang */
+            --bg-main: #F7F5F2; 
             --white: #FFFFFF;
             --danger: #D32F2F;
         }
@@ -194,13 +202,17 @@ if(isset($_GET['hapus_id'])) {
                     <input type="text" name="nama_menu" placeholder="Nama Menu" required class="form-control">
                     <input type="number" name="harga" placeholder="Harga" required class="form-control">
                 </div>
+                
                 <select name="kategori" required class="form-control">
                     <option value="">-- Pilih Kategori --</option>
-                    <option value="Sate">Sate</option>
-                    <option value="Mie">Mie</option>
-                    <option value="Nasi">Nasi</option>
-                    <option value="Minuman">Minuman</option>
+                    <?php
+                    $query_kat = mysqli_query($koneksi, "SELECT * FROM category");
+                    while($kat = mysqli_fetch_assoc($query_kat)) {
+                        echo '<option value="'.$kat['category_id'].'">'.$kat['category_name'].'</option>';
+                    }
+                    ?>
                 </select>
+                
                 <input type="file" name="gambar" required class="form-control">
                 <input type="text" name="deskripsi" placeholder="Deskripsi Singkat" required class="form-control">
                 <button type="submit" name="tambah_menu" class="btn-submit">Simpan Menu</button>
@@ -223,21 +235,33 @@ if(isset($_GET['hapus_id'])) {
                 <tbody>
                     <?php
                     $no = 1;
-                    $query = mysqli_query($koneksi, "SELECT * FROM db_sate ORDER BY id DESC");
-                    while($row = mysqli_fetch_assoc($query)) {
+                    // Menggabungkan tabel menu_item dan category agar nama kategorinya bisa terbaca
+                    $query_tampil = "SELECT menu_item.*, category.category_name 
+                                     FROM menu_item 
+                                     LEFT JOIN category ON menu_item.category_id = category.category_id 
+                                     ORDER BY menu_item.menu_id DESC";
+                    $query = mysqli_query($koneksi, $query_tampil);
+                    
+                    if(mysqli_num_rows($query) > 0) {
+                        while($row = mysqli_fetch_assoc($query)) {
                     ?>
                     <tr>
                         <td><?php echo $no++; ?></td>
-                        <td><img src="asset/img/<?php echo $row['gambar']; ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #D7CCC8;"></td>
-                        <td><strong><?php echo $row['nama_menu']; ?></strong></td>
-                        <td><?php echo $row['kategori']; ?></td>
-                        <td>Rp <?php echo number_format($row['harga'], 0, ',', '.'); ?></td>
+                        <td><img src="asset/img/<?php echo $row['image_url']; ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #D7CCC8;"></td>
+                        <td><strong><?php echo $row['menu_name']; ?></strong></td>
+                        <td><?php echo $row['category_name']; ?></td>
+                        <td>Rp <?php echo number_format($row['price'], 0, ',', '.'); ?></td>
                         <td>
-                            <a href="edit-menu.php?id=<?php echo $row['id']; ?>" class="action-link" style="color: var(--primary-orange);">Edit</a> | 
-                            <a href="admin-dashboard.php?hapus_id=<?php echo $row['id']; ?>" class="action-link" style="color: var(--danger);" onclick="return confirm('Yakin hapus?')">Hapus</a>
+                            <a href="edit-menu.php?id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--primary-orange);">Edit</a> | 
+                            <a href="admin-dashboard.php?hapus_id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--danger);" onclick="return confirm('Yakin hapus?')">Hapus</a>
                         </td>
                     </tr>
-                    <?php } ?>
+                    <?php 
+                        } 
+                    } else {
+                        echo "<tr><td colspan='6' style='text-align:center;'>Belum ada menu yang ditambahkan.</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
