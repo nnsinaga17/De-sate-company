@@ -1,4 +1,9 @@
 <?php
+// Tambahkan ini agar session disimpan di folder temp milikmu sendiri
+if (!is_dir('session_tmp')) {
+    mkdir('session_tmp', 0777, true);
+}
+session_save_path(__DIR__ . '/session_tmp');
 session_start();
 // Cek Login
 if(!isset($_SESSION['login'])) {
