@@ -438,22 +438,22 @@ include 'koneksi.php';
     </div>
 
     <footer>
-    <div class="container text-center">
-        <div class="footer-social" style="margin-bottom: 20px;">
-            <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px; text-decoration: none; display: inline-block;">
-                <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px; vertical-align: middle;">
-            </a>
+        <div class="container text-center">
+            <div class="footer-social" style="margin-bottom: 20px;">
+                <a href="https://www.instagram.com/de_satetamkot" target="_blank" rel="noopener noreferrer" style="margin: 0 15px; text-decoration: none; display: inline-block;">
+                    <img src="asset/img/instagram.jpg" alt="Instagram" style="width: 35px; vertical-align: middle;">
+                </a>
             
-            <a href="https://wa.me/6282392333601" target="_blank" rel="noopener noreferrer" style="margin: 0 15px; text-decoration: none; display: inline-block;">
-                <img src="asset/img/whatsapp.jpg" alt="WhatsApp" style="width: 35px; vertical-align: middle;">
-            </a>
+                <a href="https://wa.me/6282392333601" target="_blank" rel="noopener noreferrer" style="margin: 0 15px; text-decoration: none; display: inline-block;">
+                    <img src="asset/img/whatsapp.jpg" alt="WhatsApp" style="width: 35px; vertical-align: middle;">
+                </a>
+            </div>
+        
+            <p class="mb-1 text-light small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
+        
+            <a href="login.php" style="color: #cccccc; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
         </div>
-        
-        <p class="mb-1 text-light small">© 2026 De'Sate Taman Kota Mas. All rights reserved.</p>
-        
-        <a href="login.php" style="color: #cccccc; font-size: 0.75rem; text-decoration: none;">Admin Login</a>
-    </div>
-</footer>
+    </footer>
 
     <script src="asset/js/bootstrap.bundle.js"></script>
     <script>

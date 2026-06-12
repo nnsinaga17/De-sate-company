@@ -1,9 +1,9 @@
 <?php
 
 $host     = "localhost";
-$username = "root";
-$password = ""; 
-$database = "db_sate"; 
+$username = "dbsatenew";
+$password = "7*5rQ92yy"; 
+$database = "DB_DESATE"; 
 
 $koneksi = mysqli_connect($host, $username, $password, $database);
 
