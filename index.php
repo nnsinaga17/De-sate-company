@@ -587,6 +587,19 @@ include 'koneksi.php';
         document.addEventListener('DOMContentLoaded', () => {
             updateCartUI();
         });
+
+        // Reset tombol form jika user kembali ke halaman ini via tombol Back browser
+        window.addEventListener('pageshow', function(event) {
+          const form = document.getElementById('contactForm');
+         if (form) {
+               const btn = form.querySelector('button[type="submit"]');
+               if (btn) {
+                   btn.innerText = "Kirim"; // <-- Sesuaikan dengan teks asli tombolmu sebelum diklik
+                   btn.disabled = false;
+              }
+              form.reset(); // Opsional: Untuk mengosongkan kembali inputan Nama & Pesan
+         }
+        });
     </script>
 </body>
 </html>
