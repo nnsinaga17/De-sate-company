@@ -572,11 +572,15 @@ include 'koneksi.php';
             });
         });
 
-        // Handler form kontak biasa
+        // Handler form kontak biasa (Sudah diperbaiki)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             const btn = this.querySelector('button[type="submit"]');
             btn.innerText = "Mengirim...";
-            btn.disabled = true;
+    
+            // Berikan delay beberapa milidetik agar browser sempat memproses submit form
+            setTimeout(() => {
+                 btn.disabled = true;
+            }, 50);
         });
 
         // Sinkronisasi keranjang
