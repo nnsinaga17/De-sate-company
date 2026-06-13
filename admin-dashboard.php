@@ -204,14 +204,23 @@ if(isset($_GET['hapus_id'])) {
                 width: 100% !important;
             }
 
-            /* Perbaiki Tabel biar bisa digeser (scroll) ke samping */
+            /* --- GANTI BAGIAN TABEL DI BAWAH INI --- */
             .table-responsive-wrapper {
                 width: 100%;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch; 
+                overflow-x: auto; /* Mengaktifkan scroll horizontal */
+                -webkit-overflow-scrolling: touch; /* Scroll smooth di HP */
+                display: block; 
+                margin-top: 15px;
+                border-radius: 8px;
             }
+            
             .menu-table {
-                min-width: 600px; /* Biar isi tabel gak tergencet */
+                width: 100%;
+                min-width: 700px !important; /* KUNCI 1: Paksa tabel tetap lebar */
+            }
+            
+            .menu-table th, .menu-table td {
+                white-space: nowrap !important; /* KUNCI 2: Larang teks turun/patah ke baris baru */
             }
         }
 
