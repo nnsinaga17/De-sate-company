@@ -572,12 +572,12 @@ include 'koneksi.php';
             });
         });
 
-        // Handler form kontak biasa (Sudah diperbaiki)
+        // --Handler form kontak biasa (Sudah diperbaiki)
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             const btn = this.querySelector('button[type="submit"]');
             btn.innerText = "Mengirim...";
     
-            // Berikan delay beberapa milidetik agar browser sempat memproses submit form
+            // ---Berikan delay beberapa milidetik agar browser sempat memproses submit form---
             setTimeout(() => {
                  btn.disabled = true;
             }, 50);
@@ -588,16 +588,16 @@ include 'koneksi.php';
             updateCartUI();
         });
 
-        // Reset tombol form jika user kembali ke halaman ini via tombol Back browser
+        // ---Reset tombol form jika user kembali ke halaman ini via tombol Back browser---
         window.addEventListener('pageshow', function(event) {
           const form = document.getElementById('contactForm');
          if (form) {
                const btn = form.querySelector('button[type="submit"]');
                if (btn) {
-                   btn.innerText = "Kirim"; // <-- Sesuaikan dengan teks asli tombolmu sebelum diklik
+                   btn.innerText = "Kirim Notifikasi"; 
                    btn.disabled = false;
               }
-              form.reset(); // Opsional: Untuk mengosongkan kembali inputan Nama & Pesan
+              form.reset(); 
          }
         });
     </script>

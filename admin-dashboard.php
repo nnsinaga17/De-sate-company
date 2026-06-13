@@ -181,6 +181,40 @@ if(isset($_GET['hapus_id'])) {
             text-decoration: none; 
             font-weight: bold; 
         }
+
+        /* --- PERBAIKAN TAMPILAN HP (MOBILE) --- */
+        @media (max-width: 768px) {
+            /* Perbaiki Navbar */
+            .admin-navbar { 
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            /* Perbaiki Input Form (Nama & Harga) biar susun ke bawah */
+            .form-row-custom { 
+                flex-direction: column !important;
+                gap: 10px !important;
+            }
+            .form-row-custom input {
+                width: 100% !important;
+            }
+
+            /* Perbaiki Tabel biar bisa digeser (scroll) ke samping */
+            .table-responsive-wrapper {
+                width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; 
+            }
+            .menu-table {
+                min-width: 600px; /* Biar isi tabel gak tergencet */
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -198,7 +232,7 @@ if(isset($_GET['hapus_id'])) {
         <div class="dashboard-section">
             <h2>➕ Tambah Menu Baru</h2>
             <form method="POST" enctype="multipart/form-data">
-                <div style="display: flex; gap: 15px;">
+            <div class="form-row-custom" style="display: flex; gap: 15px;">
                     <input type="text" name="nama_menu" placeholder="Nama Menu" required class="form-control">
                     <input type="number" name="harga" placeholder="Harga" required class="form-control">
                 </div>
@@ -221,16 +255,15 @@ if(isset($_GET['hapus_id'])) {
 
         <div class="dashboard-section">
             <h2>🍽️ Daftar Menu Saat Ini</h2>
-            <table class="menu-table">
-                <thead>
-                    <tr>
-                        <th style="border-top-left-radius: 8px;">No</th>
-                        <th>Foto</th>
-                        <th>Nama</th>
-                        <th>Kategori</th>
-                        <th>Harga</th>
-                        <th style="border-top-right-radius: 8px;">Aksi</th>
-                    </tr>
+            
+            <div class="table-responsive-wrapper">
+                <table class="menu-table">
+                    <thead>
+                        </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div> </div>
                 </thead>
                 <tbody>
                     <?php
