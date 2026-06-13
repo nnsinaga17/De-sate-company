@@ -22,7 +22,6 @@ if(isset($_POST['tambah_menu'])) {
     $admin_id = isset($_SESSION['admin_id']) ? $_SESSION['admin_id'] : 1; 
     
     if(move_uploaded_file($tmp_file, $path)) {
-        // Query disesuaikan dengan nama tabel dan kolom yang baru
         $query_tambah = "INSERT INTO menu_item (admin_id, category_id, menu_name, description, price, image_url) 
                          VALUES ('$admin_id', '$kategori_id', '$nama', '$deskripsi', '$harga', '$gambar')";
         mysqli_query($koneksi, $query_tambah);
@@ -37,7 +36,6 @@ if(isset($_POST['tambah_menu'])) {
 // PROSES HAPUS MENU
 if(isset($_GET['hapus_id'])) {
     $id = mysqli_real_escape_string($koneksi, $_GET['hapus_id']);
-    // Query hapus mengarah ke tabel menu_item dengan patokan menu_id
     mysqli_query($koneksi, "DELETE FROM menu_item WHERE menu_id='$id'");
     header("Location: admin-dashboard.php");
     exit;
@@ -184,7 +182,6 @@ if(isset($_GET['hapus_id'])) {
 
         /* --- PERBAIKAN TAMPILAN HP (MOBILE) --- */
         @media (max-width: 768px) {
-            /* Perbaiki Navbar */
             .admin-navbar { 
                 flex-direction: column;
                 text-align: center;
@@ -194,8 +191,6 @@ if(isset($_GET['hapus_id'])) {
                 flex-wrap: wrap;
                 justify-content: center;
             }
-            
-            /* Perbaiki Input Form (Nama & Harga) biar susun ke bawah */
             .form-row-custom { 
                 flex-direction: column !important;
                 gap: 10px !important;
@@ -204,33 +199,37 @@ if(isset($_GET['hapus_id'])) {
                 width: 100% !important;
             }
 
-            /* --- GANTI BAGIAN TABEL DI BAWAH INI --- */
+            .dashboard-section {
+                padding: 15px; 
+            }
+
             .table-responsive-wrapper {
                 width: 100%;
-                overflow-x: auto; /* Mengaktifkan scroll horizontal */
-                -webkit-overflow-scrolling: touch; /* Scroll smooth di HP */
+                overflow-x: auto; 
+                -webkit-overflow-scrolling: touch; 
                 display: block; 
                 margin-top: 15px;
+                border: 1px solid #E0D4C8;
                 border-radius: 8px;
             }
             
             .menu-table {
                 width: 100%;
-                min-width: 700px !important; /* KUNCI 1: Paksa tabel tetap lebar */
+                min-width: 800px; /* Lebar tabel minimum agar lega */
             }
             
             .menu-table th, .menu-table td {
-                white-space: nowrap !important; /* KUNCI 2: Larang teks turun/patah ke baris baru */
+                white-space: nowrap !important; /* Mencegah teks patah */
+                padding: 12px;
             }
         }
-
     </style>
 </head>
 <body>
 
     <nav class="admin-navbar">
-            <div class="navbar-brand">🍢 De'Sate Admin Panel</div>        
-            <div class="nav-links">
+        <div class="navbar-brand">🍢 De'Sate Admin Panel</div>        
+        <div class="nav-links">
             <span>Halo, Admin!</span>
             <a href="index.php" class="btn-nav btn-back">Kembali ke Website</a>
             <a href="logout.php" class="btn-nav btn-logout">Logout</a>
@@ -241,7 +240,7 @@ if(isset($_GET['hapus_id'])) {
         <div class="dashboard-section">
             <h2>➕ Tambah Menu Baru</h2>
             <form method="POST" enctype="multipart/form-data">
-            <div class="form-row-custom" style="display: flex; gap: 15px;">
+                <div class="form-row-custom" style="display: flex; gap: 15px;">
                     <input type="text" name="nama_menu" placeholder="Nama Menu" required class="form-control">
                     <input type="number" name="harga" placeholder="Harga" required class="form-control">
                 </div>
@@ -268,44 +267,47 @@ if(isset($_GET['hapus_id'])) {
             <div class="table-responsive-wrapper">
                 <table class="menu-table">
                     <thead>
-                        </thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Gambar</th>
+                            <th>Nama Menu</th>
+                            <th>Kategori</th>
+                            <th>Harga</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
                     <tbody>
-                        </tbody>
+                        <?php
+                        $no = 1;
+                        $query_tampil = "SELECT menu_item.*, category.category_name 
+                                         FROM menu_item 
+                                         LEFT JOIN category ON menu_item.category_id = category.category_id 
+                                         ORDER BY menu_item.menu_id DESC";
+                        $query = mysqli_query($koneksi, $query_tampil);
+                        
+                        if(mysqli_num_rows($query) > 0) {
+                            while($row = mysqli_fetch_assoc($query)) {
+                        ?>
+                        <tr>
+                            <td><?php echo $no++; ?></td>
+                            <td><img src="asset/img/<?php echo $row['image_url']; ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #D7CCC8;"></td>
+                            <td><strong><?php echo $row['menu_name']; ?></strong></td>
+                            <td><?php echo $row['category_name']; ?></td>
+                            <td>Rp <?php echo number_format($row['price'], 0, ',', '.'); ?></td>
+                            <td>
+                                <a href="edit-menu.php?id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--primary-orange);">Edit</a> | 
+                                <a href="admin-dashboard.php?hapus_id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--danger);" onclick="return confirm('Yakin hapus?')">Hapus</a>
+                            </td>
+                        </tr>
+                        <?php 
+                            } 
+                        } else {
+                            echo "<tr><td colspan='6' style='text-align:center;'>Belum ada menu yang ditambahkan.</td></tr>";
+                        }
+                        ?>
+                    </tbody>
                 </table>
-            </div> </div>
-                </thead>
-                <tbody>
-                    <?php
-                    $no = 1;
-                    // Menggabungkan tabel menu_item dan category agar nama kategorinya bisa terbaca
-                    $query_tampil = "SELECT menu_item.*, category.category_name 
-                                     FROM menu_item 
-                                     LEFT JOIN category ON menu_item.category_id = category.category_id 
-                                     ORDER BY menu_item.menu_id DESC";
-                    $query = mysqli_query($koneksi, $query_tampil);
-                    
-                    if(mysqli_num_rows($query) > 0) {
-                        while($row = mysqli_fetch_assoc($query)) {
-                    ?>
-                    <tr>
-                        <td><?php echo $no++; ?></td>
-                        <td><img src="asset/img/<?php echo $row['image_url']; ?>" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #D7CCC8;"></td>
-                        <td><strong><?php echo $row['menu_name']; ?></strong></td>
-                        <td><?php echo $row['category_name']; ?></td>
-                        <td>Rp <?php echo number_format($row['price'], 0, ',', '.'); ?></td>
-                        <td>
-                            <a href="edit-menu.php?id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--primary-orange);">Edit</a> | 
-                            <a href="admin-dashboard.php?hapus_id=<?php echo $row['menu_id']; ?>" class="action-link" style="color: var(--danger);" onclick="return confirm('Yakin hapus?')">Hapus</a>
-                        </td>
-                    </tr>
-                    <?php 
-                        } 
-                    } else {
-                        echo "<tr><td colspan='6' style='text-align:center;'>Belum ada menu yang ditambahkan.</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+            </div>
         </div>
     </div>
 </body>
